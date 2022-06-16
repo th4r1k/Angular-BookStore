@@ -1,0 +1,14 @@
+<div class="d-flex align-items-center justify-content-center container" *ngIf="this.cartService.books.length === 0 else noEmpty">
+  <h2 class="text-black bg-white bg-opacity-75 rounded-pill">Shopping Cart is Empty</h2>
+</div>
+<ng-template #noEmpty>
+  <div class=" container">
+    <h2 class="bg-white text-center">{{ this.cartService.books.length }} books in the Shopping Cart</h2>
+    <ul class="list-group" *ngFor="let book of this.cartService.books">
+      <li class="d-flex justify-content-between align-items-center py-1 bg-white bg-opacity-75 ">
+        {{ book.title }}
+        <button type="button" class="btn btn-secondary" (click)="removeFromCart(book)">-</button>
+      </li>
+    </ul>
+  </div>
+</ng-template>

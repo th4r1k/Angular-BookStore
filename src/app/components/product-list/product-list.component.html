@@ -1,0 +1,30 @@
+<div class="container">
+  <app-cart></app-cart>
+<input [(ngModel)]="search" class="form-control bg-black p-2 text-black bg-opacity-25" type="search" placeholder="Search" aria-label="Search" >
+
+<table class="table bg-black bg-opacity-75 text-white text-bold outline-none">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th class="pointer" scope="col" (click)="onSortOrder('title')">Title</th>
+      <th class="pointer" scope="col" (click)="onSortOrder('price')">Price</th>
+      <th scope="col">Buy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let book of books | filter: search | sort: columnName: sortOrder ; index as i">
+      <th scope="row">{{ i + 1 }}</th>
+      <td>
+        <img [src]="book.image" alt="{{book.title}}" width="100">
+        <a class="text-white fs-4" [routerLink]="['/books', book.isbn13]">{{ book.title }}</a>
+        <small class="text-light subtitle p-2 fs-6">{{ book.subtitle }}</small>
+      </td>
+      <td class="fw-bold">{{ book.price === '$0.00' ? 'Free' : book.price }}</td>
+      <td >
+        <button type="button" class="btn btn-success" *ngIf="!this.cartService.books.includes(book)" (click)="addToCart(book)">+</button>
+        <button type="button" class="btn btn-danger" *ngIf="this.cartService.books.includes(book)" (click)="removeFromCart(book)">-</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
